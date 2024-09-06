@@ -1,0 +1,66 @@
+<h2 class="text-center">Listagem de Empréstimos Disponíveis</h2>
+
+<!-- Contêiner para alinhar o formulário e a lista lado a lado -->
+<div class="form-list-container">
+  
+  <!-- Formulário -->
+  <form (ngSubmit)="listarEmprestimos()" #emprestimoForm="ngForm" class="form-container" *ngIf="!mostrandoResultado">
+    <div class="form-group">
+      <label for="cpf">CPF</label>
+      <input
+        type="text"
+        id="cpf"
+        class="form-control"
+        required
+        [(ngModel)]="emprestimo.cpf"
+        name="cpf"
+        minlength="11"
+        maxlength="11"
+        #cpf="ngModel"
+      />
+      <div *ngIf="cpf.invalid && cpf.touched" class="text-danger">
+        <small *ngIf="cpf.errors?.['required']">CPF é obrigatório.</small>
+        <small *ngIf="cpf.errors?.['minlength']">O CPF deve ter 11 dígitos.</small>
+        <small *ngIf="cpf.errors?.['maxlength']">O CPF deve ter no máximo 11 dígitos.</small>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="valor">Valor do Empréstimo</label>
+      <input
+        type="number"
+        id="valor"
+        class="form-control"
+        required
+        [(ngModel)]="emprestimo.valor"
+        name="valor"
+        min="1"
+        #valor="ngModel"
+      />
+      <div *ngIf="valor.invalid && valor.touched" class="text-danger">
+        <small *ngIf="valor.errors?.['required']">Valor do Empréstimo é obrigatório.</small>
+        <small *ngIf="valor.errors?.['min']">O valor deve ser maior que zero.</small>
+      </div>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-3" [disabled]="!emprestimoForm.form.valid">
+      Listar Empréstimos
+    </button>
+  </form>
+
+  <!-- Exibir lista de empréstimos -->
+  <div *ngIf="mostrandoResultado" class="list-container">
+    <h3>Empréstimos Disponíveis:</h3>
+    <ul>
+      <li *ngFor="let emprestimo of emprestimosDisponiveis">{{ emprestimo }}</li>
+    </ul>
+
+    <!-- Botão para nova requisição -->
+    <button class="btn btn-secondary mt-3" (click)="novaPesquisa()">Nova Pesquisa</button>
+  </div>
+</div>
+
+<!-- Exibir erros, se houver -->
+<div *ngIf="errorMessage" class="alert alert-danger mt-3">
+  {{ errorMessage }}
+</div>

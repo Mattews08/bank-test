@@ -1,0 +1,34 @@
+.form-list-container {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 10px 24px;
+}
+
+.form-container {
+  flex: 1;
+  max-width: 45%;
+}
+
+.list-container {
+  flex: 1;
+  max-width: 45%;
+}
+
+@media (max-width: 768px) {
+  .form-list-container {
+    flex-direction: column;
+  }
+
+  .form-container,
+  .list-container {
+    max-width: 100%;
+  }
+}
+
+button:disabled {
+  background-color: #cccccc !important;
+  border-color: #cccccc !important;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
